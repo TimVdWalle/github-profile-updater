@@ -131,7 +131,7 @@ print(weather)
 
 
 # updating bio
-bio = bio1 + " ... and it is _" + weather + "_ here in Belgium."
+bio = bio1 + " and it is _" + weather + "_ here in Belgium."
 updateGitBio(bio)
 
 
