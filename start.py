@@ -121,7 +121,7 @@ def mapDescription(id, main, windspeed):
 
 # fetching data weekday
 weekday = date.today().strftime('%A (%d %B)')
-bio1 = "Today is " + weekday
+bio1 = "Today is ... " + weekday
 print (bio1)
 
 # fetching data weather
