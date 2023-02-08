@@ -121,7 +121,7 @@ def mapDescription(id, main, windspeed):
 
 # fetching data weekday
 weekday = date.today().strftime('%A (%d %B)')
-bio1 = "Today is ... " + weekday
+bio1 = "Today is " + weekday
 print (bio1)
 
 # fetching data weather
@@ -131,7 +131,7 @@ print(weather)
 
 
 # updating bio
-bio = bio1 + " and it is _" + weather + "_ here in Belgium."
+bio = bio1 + " ... and it is _" + weather + "_ here in Belgium."
 updateGitBio(bio)
 
 
