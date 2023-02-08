@@ -74,7 +74,7 @@ def fetch_weather():
         #print(weather_main)
         #print(weather_description)
 
-        print("windspeeld = ", windspeed)
+        print("windspeed = ", windspeed)
 
         return mapDescription(weather_id, weather_main, windspeed)
     
