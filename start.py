@@ -3,6 +3,8 @@
 #   INCLUDES / REQUIRES
 #
 ################################################################
+import os
+from dotenv import load_dotenv
 from datetime import date
 import requests, json
 
@@ -18,8 +20,9 @@ from github import Github
 #   CONFIG
 #
 ################################################################
-GITHUB_ACCESS_TOKEN = ""
-OPEN_WEATHER_API_KEY = ""
+load_dotenv()
+GITHUB_ACCESS_TOKEN = os.getenv('GITHUB_ACCESS_TOKEN')
+OPEN_WEATHER_API_KEY = os.getenv('OPEN_WEATHER_API_KEY')
 
 base_url = "http://api.openweathermap.org/data/2.5/weather?"
 city_name = "Bruges"
