@@ -62,6 +62,9 @@ load_dotenv()
 GITHUB_ACCESS_TOKEN = os.getenv('GITHUB_ACCESS_TOKEN')
 OPEN_WEATHER_API_KEY = os.getenv('OPEN_WEATHER_API_KEY')
 
+EMAIL = os.getenv('EMAIL')
+PASSWORD = os.getenv('PASSWORD')
+
 base_url = "http://api.openweathermap.org/data/2.5/weather?"
 city_name = "Bruges"
 
@@ -220,7 +223,7 @@ def rotate(origin, point, angle):
 
 
 def uploadToGravatar(imageBase64):
-   g = GravatarXMLRPC(email="", password="")
+   g = GravatarXMLRPC(email=EMAIL, password=PASSWORD)
    res = g._call("saveData", {'data':imageBase64})
    g._call("useUserimage",  {'userimage': res, 'addresses': [''] })
 
