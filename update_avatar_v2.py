@@ -70,39 +70,24 @@ city_name = "Bruges"
 filename = "img01.png"
 dim_x = 2000 * 2      # * 2 om te kunnen resizen ifv anti-alias
 dim_y = 2000 * 2
+crop = 400
 
-base_color = (5, 210, 255)      # soort van sky blue
-
-colors_old = [
-   '#ffffff',
-   '#E5F5FF',
-   '#BFDEFF',
-   '#05b4ff',
-
-   '#6ca8ff',
-   '#a598f9',
-   '#d186e2',
-   '#ef74c1',
-
-   '#db36a4',
-   '#FF6998',
-   '#FF847D',
-
-   '#FF9671',
-   '#FFA967',
-   '#FFC75F',
-   '#F9F871'
-]
+# colorpalettes created with
+# https://coolors.co/6ad2f5-118ab2-06d6a0-ffd166-f73562
+#
 
 colors = np.array(
    [
-      ["#09BFE3","#19A5E3","#2A8BE3","#3A71E3","#4A57E3","#5A3DE3","#6B23E3","#7B09E3"],
-      ["#5009C8","#5F0DC5","#6E11C3","#7D15C0","#8D1ABE","#9C1EBB","#AB22B9","#BA26B6"],
-      ["#7B09E3","#8714DA","#931ED1","#9F29C8","#AB34C0","#B73FB7","#C349AE","#CF54A5"],
-      ["#BA26B6","#BF36B7","#C446B9","#C956BA","#CD67BB","#D277BC","#D787BE","#DC97BF"],
-      ["#CF54A5","#D4688D","#DA7C76","#DF905E","#E5A447","#EAB82F","#F0CC18","#F5E000"]
+      ["#6AD2F5", "#5DC8EB", "#51BDE2", "#44B3D8", "#37A9CF", "#2A9FC5", "#1E94BC", "#118AB2"],
+      ["#118AB2", "#0F95AF", "#0EA0AD", "#0CABAA", "#0BB5A8", "#09C0A5", "#08CBA3", "#06D6A0"],
+      ["#06D6A0", "#2AD598", "#4DD58F", "#71D487", "#94D37F", "#B8D277", "#DBD26E", "#FFD166"],
+      ["#FFD166", "#FEBB65", "#FDA465", "#FC8E64", "#FA7864", "#F96263", "#F84B63", "#F73562"],
+      ["#F73562", "#F84C72", "#F96282", "#FA7992", "#FC8FA3", "#FDA6B3", "#FEBCC3", "#FFD3D3"]
    ]
 )
+
+
+
 
 minTemp = 273     # ~ 0 graden celcius
 maxTemp = 305     # ~ 32 graden celcius
@@ -169,16 +154,28 @@ def create_image_weather(clouds, temp, windSpeed):
    draw.polygon((p1, p2, p3, p4, p5, p6, p7, p8), fill=fgColor, outline=None)
 
    # now draw the triangles (hardcoded, because the points are also hardcoded from p1 to p8)
-   draw.polygon((p7, p8, pm), fill=colors[1], outline=colors[0])
-   draw.polygon((p8, p1, pm), fill=colors[3], outline=colors[0])
-   draw.polygon((p6, p5, pm), fill=colors[2], outline=colors[0])
-   draw.polygon((p1, p2, pm), fill=colors[4], outline=colors[0])
-   draw.polygon((p5, p4, pm), fill=colors[5], outline=colors[0])
-   draw.polygon((p2, p3, pm), fill=colors[6], outline=colors[0])
-   draw.polygon((p4, p3, pm), fill=colors[7], outline=colors[0])
+   draw.polygon((p7, p8, pm), fill=colors[1], outline='black')
+   draw.polygon((p8, p1, pm), fill=colors[3], outline='black')
+   draw.polygon((p6, p5, pm), fill=colors[2], outline='black')
+   draw.polygon((p1, p2, pm), fill=colors[4], outline='black')
+   draw.polygon((p5, p4, pm), fill=colors[5], outline='black')
+   draw.polygon((p2, p3, pm), fill=colors[6], outline='black')
+   draw.polygon((p4, p3, pm), fill=colors[7], outline='black')
 
    # resizen om anti-alias mogelijk te maken, en saven; LANCZOS ~ anti-alias
    imageBg = imageBg.resize((dim_x2, dim_y2), resample=Image.LANCZOS)
+
+   #dimensions to crop
+   factor = 1 - ((windSpeed + 1) / 20)
+   cropFactor = abs(math.ceil(crop * factor))
+
+   print(cropFactor)
+
+   dim1 = math.ceil(cropFactor)
+   dim2 = math.ceil(dim_y/2 - cropFactor)
+   box = (dim1, dim1, dim2, dim2)
+   imageBg = imageBg.crop(box)
+
    imageBg.save(filename)
 
 def mapWeather(w):
