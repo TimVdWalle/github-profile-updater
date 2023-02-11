@@ -75,7 +75,7 @@ crop = 400
 
 # colorpalettes created with
 # https://coolors.co/6ad2f5-118ab2-06d6a0-ffd166-f73562
-#
+# https://coolors.co/gradient-palette/f73562-ffd3d3?number=8
 
 colors = np.array(
    [
