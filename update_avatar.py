@@ -33,7 +33,6 @@
 ################################################################
 import os
 from dotenv import load_dotenv
-#from datetime import date
 import requests, json
 import hashlib
 
@@ -42,7 +41,6 @@ from libgravatar import GravatarXMLRPC
 
 import random
 import numpy as np
-#import cv2
 import math
 
 from PIL import Image, ImageDraw, ImageColor
@@ -106,8 +104,6 @@ colors = np.array(
    ]
 )
 
-
-
 minTemp = 273     # ~ 0 graden celcius
 maxTemp = 305     # ~ 32 graden celcius
 
@@ -133,11 +129,6 @@ def create_image_weather(clouds, temp, windSpeed):
    clouds = 100 - clouds
    clouds = clouds / 100
    alpha = round(255 * clouds)
-   #windSpeedMapped = mapWind(windSpeed)
-   #print("mapped windSpeed = ", mapWind(windSpeed))
-
-   #offset = round(windSpeedMapped * dim_x4 *1.2)
-
    offset = getOffsetFromWind(windSpeed)
    colorIndex = mapTemp(temp)
    fgColor = getColor(colorIndex)
@@ -299,10 +290,8 @@ def createColorBlocks():
    imgSwaps = Image.new(mode = "RGBA", size = (size, size), color = 'black')
    drawSwaps = ImageDraw.Draw(imgSwaps)
 
-   # get the number of rows
+   # get dimensions
    rows = len(colors)
-
-   # get the number of columns
    cols = len(colors[0])
 
    colorCount = rows * cols
@@ -358,6 +347,7 @@ def main():
       windSpeed = weatherTuple[1]
       temp = weatherTuple[2]
 
+      # test creation of image with hardcoded values
       temp = 273 + 35
       windSpeed = 6
       clouds = 80
