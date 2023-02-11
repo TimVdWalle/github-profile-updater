@@ -119,7 +119,6 @@ def create_image_weather(clouds, temp, windSpeed):
    colorIndex = mapTemp(temp)
    colors = getColors(colorIndex)
    fgColor = colors[0]
-   bgColor = colors[7]
 
    # achtergrond kleur op grijs zetten
    imageBg = Image.new(mode = "RGBA", size = (dim_x, dim_y), color = '#32A6F7')
@@ -329,7 +328,6 @@ def createColorBlocks():
          i = i + 1
 
    imgSwaps.save(filename)
-   exit(0)
 
 
 def imgToBase64(filename):
