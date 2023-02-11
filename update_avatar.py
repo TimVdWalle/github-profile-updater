@@ -75,17 +75,17 @@ dim_y = 2000 * 2
 
 base_color = (5, 210, 255)      # soort van sky blue
 
-colors = [    
-   '#ffffff',      
-   '#E5F5FF',      
+colors = [
+   '#ffffff',
+   '#E5F5FF',
    '#BFDEFF',
-   '#05b4ff',   
+   '#05b4ff',
 
    '#6ca8ff',
    '#a598f9',
    '#d186e2',
    '#ef74c1',
-   
+
    '#db36a4',
    '#FF6998',
    '#FF847D',
@@ -95,6 +95,72 @@ colors = [
    '#FFC75F',
    '#F9F871'
 ]
+# colors = [
+#   '#FF69B4',
+#   '#FFB6C1',
+#   '#FFC0CB',
+#   '#FF1493',
+#   '#FF00FF',
+#   '#BA55D3',
+#   '#800080',
+#   '#9400D3',
+#   '#8B008B',
+#   '#9370DB',
+#   '#7B68EE',
+#   '#6A5ACD',
+#   '#483D8B',
+#   '#6495ED',
+#   '#00BFFF',
+#   '#00FFFF',
+#   '#00FF7F',
+#   '#00FA9A',
+#   '#00FF00',
+#   '#7FFF00',
+#   '#7CFC00',
+#   '#ADFF2F',
+#   '#9ACD32',
+#   '#228B22',
+#   '#006400',
+#   '#008000',
+#   '#556B2F',
+#   '#6B8E23',
+#   '#808000',
+#   '#FFFF00',
+#   '#FFD700',
+#   '#F0E68C',
+#   '#EEE8AA',
+#   '#BDB76B',
+#   '#DAA520',
+#   '#FFA500',
+#   '#FF8C00',
+#   '#FF7F50',
+#   '#FF6347',
+#   '#FF4500',
+#   '#FF0000',
+#   '#FF69B4',
+#   '#DC143C',
+#   '#8B0000',
+#   '#B22222',
+#   '#8B008B',
+#   '#CD5C5C',
+#   '#F08080',
+#   '#FFE4E1',
+#   '#FFC0CB',
+#   '#FFC1C1',
+#   '#FFB6C1',
+#   '#FFA07A',
+#   '#FFA500',
+#   '#FF8C00',
+#   '#FF7F50',
+#   '#FF6347',
+#   '#FF4500',
+#   '#FF0000',
+#   '#DC143C',
+#   '#B22222',
+#   '#8B0000',
+#   '#800000',
+#   '#000000'
+# ]
 
 minTemp = 273     # ~ 0 graden celcius
 maxTemp = 305     # ~ 32 graden celcius
@@ -299,8 +365,9 @@ def main():
       windSpeed = weatherTuple[1]
       temp = weatherTuple[2]
 
-      #temp = 273 + 30
-      #wind = 30
+      temp = 273 + 10
+      windspeed = 30
+      clouds = 30
 
       print("clouds     = ", clouds)
       print("windspeed  = ", round(windSpeed))
@@ -308,9 +375,9 @@ def main():
 
       create_image_weather(clouds, temp, windSpeed)
       print("image created")
-      encoded = imgToBase64(filename)
-      uploadToGravatar(encoded)
-      print("image uploaded")
+#       encoded = imgToBase64(filename)
+#       uploadToGravatar(encoded)
+#       print("image uploaded")
 
       # tonen welke colors er gedefinieerd zijn in de color array, om gemakkelijker te zien welke uit de toon vallen
       createColorBlocks()
