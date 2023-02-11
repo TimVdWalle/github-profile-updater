@@ -249,8 +249,33 @@ def mapWeather(w):
 
 
 def mapWind(wind):
-   magicFactor = 14
-   return np.tanh((wind - 1) / magicFactor)
+   magicFactor = 25
+   return np.tanh((wind -4) / magicFactor)
+
+def getOffsetFromWind(windSpeed):
+   # some parameters for the custom mapping algo
+   windCorrectionTerm = 2
+   correctionTerm = -300
+   correctionFactor = 2500
+
+   splitCutoff = 350
+   splitFactor = 4
+
+   maxWindSpeed = 30
+
+   # the algo
+   mapped = (windSpeed + windCorrectionTerm) / maxWindSpeed * correctionFactor + correctionTerm
+
+   # apply corrections because values above 350 climb too fast
+   if(mapped > splitCutoff):
+      factor = mapped / splitCutoff
+      factor = factor - 1
+      factor = factor / splitFactor
+      factor = factor + 1
+      factor = 1 / factor
+      mapped = mapped * factor
+
+   return mapped
 
 def mapTemp(temp):   
    if temp <= minTemp:
