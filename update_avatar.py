@@ -415,12 +415,12 @@ def main():
       createColorBlocks()
 
 
-      tests = [
-          0,1,2,3,4,6,8,10,12,15,20,30
-      ]
+#      tests = [
+#          0,1,2,3,4,6,8,10,12,15,20,30
+#      ]
 
-      for x in tests:
-         print(x, getOffsetFromWind(x))
+#      for x in tests:
+#         print(x, getOffsetFromWind(x))
 
 if __name__ == "__main__":
     main()
