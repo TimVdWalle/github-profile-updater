@@ -36,7 +36,7 @@ from dotenv import load_dotenv
 import requests, json
 import hashlib
 
-from libgravatar import Gravatar
+#from libgravatar import Gravatar
 from libgravatar import GravatarXMLRPC
 
 import random
@@ -126,20 +126,20 @@ dim_y4 = round(dim_y2 / 2)
 ################################################################
 def create_image_weather(clouds, temp, windSpeed):
    # berekenen van waardes
-   clouds = 100 - clouds
+   #clouds = 100 - clouds
    clouds = clouds / 100
    alpha = round(255 * clouds)
    offset = getOffsetFromWind(windSpeed)
    colorIndex = mapTemp(temp)
    colors = getColors(colorIndex)
    fgColor = colors[0]
-   bgColor = colors[1]
+   bgColor = colors[7]
 
    # achtergrond kleur op grijs zetten
-   imageBg = Image.new(mode = "RGBA", size = (dim_x, dim_y), color = '#7788bb')
+   imageBg = Image.new(mode = "RGBA", size = (dim_x, dim_y), color = '#32A6F7')
 
    # voorgrond image aanmaken
-   imageFg = Image.new(mode = "RGBA", size = (dim_x, dim_y), color = bgColor)
+   imageFg = Image.new(mode = "RGBA", size = (dim_x, dim_y), color = 'grey')
    imageFg.putalpha(alpha)
 
    # achtergrond samenvoegen met voorgrond
@@ -359,9 +359,9 @@ def main():
       temp = weatherTuple[2]
 
       # test creation of image with hardcoded values
-      #temp = 273 + 20
-      #windSpeed = 0
-      #clouds = 20
+      temp = 273 + 20
+      windSpeed = 0
+      clouds = 23
 
       print("clouds     = ", clouds)
       print("windSpeed  = ", round(windSpeed))
@@ -371,8 +371,8 @@ def main():
       print("image created")
       encoded = imgToBase64(filename)
       print(filename)
-      uploadToGravatar(encoded)
-      print("image uploaded")
+      #uploadToGravatar(encoded)
+      #print("image uploaded")
 
       # tonen welke colors er gedefinieerd zijn in de color array, om gemakkelijker te zien welke uit de toon vallen
       createColorBlocks()
