@@ -372,7 +372,7 @@ def main():
       encoded = imgToBase64(filename)
       print(filename)
       #uploadToGravatar(encoded)
-      #print("image uploaded")
+      print("image uploaded")
 
       # tonen welke colors er gedefinieerd zijn in de color array, om gemakkelijker te zien welke uit de toon vallen
       createColorBlocks()
