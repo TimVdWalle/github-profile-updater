@@ -114,7 +114,7 @@ def create_image_weather(clouds, temp, windSpeed):
    # berekenen van waardes
    #clouds = 100 - clouds
    clouds = clouds / 100
-   alpha = round(255 * clouds)
+   alpha = round(160 * clouds)
    offset = getOffsetFromWind(windSpeed)
    colorIndex = mapTemp(temp)
    colors = getColors(colorIndex)
@@ -136,7 +136,7 @@ def create_image_weather(clouds, temp, windSpeed):
    # punten berekenen
    origin = (dim_x2, dim_y2)
 
-   print("offset     = ", offset)
+   #print("offset     = ", offset)
 
    pm = (dim_x2, dim_y2)
 
@@ -169,7 +169,7 @@ def create_image_weather(clouds, temp, windSpeed):
    factor = 1 - ((windSpeed + 1) / 20)
    cropFactor = abs(math.ceil(crop * factor))
 
-   print(cropFactor)
+   #print(cropFactor)
 
    dim1 = math.ceil(cropFactor)
    dim2 = math.ceil(dim_y/2 - cropFactor)
@@ -355,9 +355,9 @@ def main():
       temp = weatherTuple[2]
 
       # test creation of image with hardcoded values
-      temp = 273 + 20
-      windSpeed = 0
-      clouds = 23
+      #temp = 273 + 11
+      #windSpeed = 7
+      #clouds = 10
 
       print("clouds     = ", clouds)
       print("windSpeed  = ", round(windSpeed))
@@ -367,7 +367,7 @@ def main():
       print("image created")
       encoded = imgToBase64(filename)
       print(filename)
-      #uploadToGravatar(encoded)
+      uploadToGravatar(encoded)
       print("image uploaded")
 
       # tonen welke colors er gedefinieerd zijn in de color array, om gemakkelijker te zien welke uit de toon vallen
