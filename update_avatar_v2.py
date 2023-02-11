@@ -274,7 +274,7 @@ def rotate(origin, point, angle):
 def uploadToGravatar(imageBase64):
    g = GravatarXMLRPC(email=EMAIL, password=PASSWORD)
    res = g._call("saveData", {'data':imageBase64})
-   g._call("useUserimage",  {'userimage': res, 'addresses': [''] })
+   g._call("useUserimage",  {'userimage': res, 'addresses': MAILS_TO_ATTACH })
 
 
 def fetch_weather():
