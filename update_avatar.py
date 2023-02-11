@@ -182,7 +182,7 @@ dim_y4 = round(dim_y2 / 2)
 #   FUNCTIONS
 #
 ################################################################
-def create_image_weather(clouds, temp, windspeed):
+def create_image_weather(clouds, temp, windSpeed):
    # berekenen van waardes
    clouds = 100 - clouds
    clouds = clouds / 100
@@ -365,12 +365,12 @@ def main():
       windSpeed = weatherTuple[1]
       temp = weatherTuple[2]
 
-      temp = 273 + 10
-      windspeed = 30
-      clouds = 30
+      temp = 273 + 35
+      windSpeed = 6
+      clouds = 80
 
       print("clouds     = ", clouds)
-      print("windspeed  = ", round(windSpeed))
+      print("windSpeed  = ", round(windSpeed))
       print("temp       = ", round(temp - 273))
 
       create_image_weather(clouds, temp, windSpeed)
