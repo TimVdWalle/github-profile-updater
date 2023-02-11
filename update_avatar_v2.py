@@ -62,6 +62,7 @@ OPEN_WEATHER_API_KEY = os.getenv('OPEN_WEATHER_API_KEY')
 
 EMAIL = os.getenv('EMAIL')
 PASSWORD = os.getenv('PASSWORD')
+MAILS_TO_ATTACH = os.environ.get('ATTACH_IMAGE_TO_MAILS').split(',')
 
 base_url = "http://api.openweathermap.org/data/2.5/weather?"
 city_name = "Bruges"
