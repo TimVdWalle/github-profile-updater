@@ -187,7 +187,12 @@ def create_image_weather(clouds, temp, windSpeed):
    clouds = 100 - clouds
    clouds = clouds / 100
    alpha = round(255 * clouds)
-   offset = round(mapWind(windspeed)*dim_x4)
+   #windSpeedMapped = mapWind(windSpeed)
+   #print("mapped windSpeed = ", mapWind(windSpeed))
+
+   #offset = round(windSpeedMapped * dim_x4 *1.2)
+
+   offset = getOffsetFromWind(windSpeed)
    colorIndex = mapTemp(temp)
    fgColor = getColor(colorIndex)
    bgColor = getPairedColor(colorIndex)
@@ -207,6 +212,8 @@ def create_image_weather(clouds, temp, windSpeed):
 
    # punten berekenen
    origin = (dim_x2, dim_y2)
+
+   print("offset     = ", offset)
 
    p1 = (dim_x4 - offset, dim_y2)
    p3 = rotate(origin, p1, np.pi / 2)
@@ -406,6 +413,14 @@ def main():
 
       # tonen welke colors er gedefinieerd zijn in de color array, om gemakkelijker te zien welke uit de toon vallen
       createColorBlocks()
+
+
+      tests = [
+          0,1,2,3,4,6,8,10,12,15,20,30
+      ]
+
+      for x in tests:
+         print(x, getOffsetFromWind(x))
 
 if __name__ == "__main__":
     main()
