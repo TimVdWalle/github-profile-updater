@@ -75,7 +75,7 @@ dim_y = 2000 * 2
 
 base_color = (5, 210, 255)      # soort van sky blue
 
-colors = [
+colors_old = [
    '#ffffff',
    '#E5F5FF',
    '#BFDEFF',
@@ -95,151 +95,18 @@ colors = [
    '#FFC75F',
    '#F9F871'
 ]
-#
-# colors = [
-# '#FFC0CB',
-# '#FFB6C1',
-# '#FF69B4',
-# '#FF1493',
-# '#E6E6FA',
-# '#ADD8E6',
-# '#B0E0E6',
-# '#87CEFA',
-# '#87CEEB',
-# '#00BFFF',
-# '#90EE90',
-# '#98FB98',
-# '#9ACD32',
-# '#7FFF00',
-# '#ADFF2F',
-# '#FFB6C1',
-# '#FF69B4',
-# '#FFE4E1',
-# '#FFC0CB',
-# '#FFC1C1',
-# '#F0E68C',
-# '#EEE8AA',
-# '#BDB76B',
-# '#DAA520',
-# '#FFFF00',
-# '#AFEEEE',
-# '#E0FFFF',
-# '#00FFFF',
-# '#7FFFD4',
-# '#40E0D0',
-# '#F5DEB3',
-# '#FFE4B5',
-# '#FFA07A',
-# '#FFA500',
-# '#FFD700',
-# '#FFC0CB',
-# '#FFB6C1',
-# '#FF69B4',
-# '#FF1493',
-# '#E6E6FA',
-# '#FFDAB9',
-# '#FFE4C4',
-# '#FFE5B4',
-# '#FFA07A',
-# '#FFD700',
-# '#E6E6E6',
-# '#D3D3D3',
-# '#C0C0C0',
-# '#A9A9A9',
-# '#808080',
-# '#F5F5DC',
-# '#F5F5F5',
-# '#DCDCDC',
-# '#C0C0C0',
-# '#A9A9A9',
-# '#F5F5F5',
-# '#F8F8FF',
-# '#DCDCDC',
-# '#C0C0C0',
-# '#A9A9A9',
-# '#F0FFFF',
-# '#E0FFFF',
-# '#00FFFF',
-# '#7FFFD4',
-# '#40E0D0',
-# '#F0FFF0',
-# '#F5FFFA',
-# '#98FB98',
-# '#9ACD32',
-# '#7FFF00',
-# '#F5FFFA',
-# '#F0FFF0',
-# '#98FB98',
-# '#9ACD32',
-# '#77FFFF'
-# ]
 
-# colors = [
-#   '#FF69B4',
-#   '#FFB6C1',
-#   '#FFC0CB',
-#   '#FF1493',
-#   '#FF00FF',
-#   '#BA55D3',
-#   '#800080',
-#   '#9400D3',
-#   '#8B008B',
-#   '#9370DB',
-#   '#7B68EE',
-#   '#6A5ACD',
-#   '#483D8B',
-#   '#6495ED',
-#   '#00BFFF',
-#   '#00FFFF',
-#   '#00FF7F',
-#   '#00FA9A',
-#   '#00FF00',
-#   '#7FFF00',
-#   '#7CFC00',
-#   '#ADFF2F',
-#   '#9ACD32',
-#   '#228B22',
-#   '#006400',
-#   '#008000',
-#   '#556B2F',
-#   '#6B8E23',
-#   '#808000',
-#   '#FFFF00',
-#   '#FFD700',
-#   '#F0E68C',
-#   '#EEE8AA',
-#   '#BDB76B',
-#   '#DAA520',
-#   '#FFA500',
-#   '#FF8C00',
-#   '#FF7F50',
-#   '#FF6347',
-#   '#FF4500',
-#   '#FF0000',
-#   '#FF69B4',
-#   '#DC143C',
-#   '#8B0000',
-#   '#B22222',
-#   '#8B008B',
-#   '#CD5C5C',
-#   '#F08080',
-#   '#FFE4E1',
-#   '#FFC0CB',
-#   '#FFC1C1',
-#   '#FFB6C1',
-#   '#FFA07A',
-#   '#FFA500',
-#   '#FF8C00',
-#   '#FF7F50',
-#   '#FF6347',
-#   '#FF4500',
-#   '#FF0000',
-#   '#DC143C',
-#   '#B22222',
-#   '#8B0000',
-#   '#800000',
-#   '#000000'
-# ]
+colors = np.array(
+   [
+      ["#09BFE3","#19A5E3","#2A8BE3","#3A71E3","#4A57E3","#5A3DE3","#6B23E3","#7B09E3"],
+      ["#5009C8","#5F0DC5","#6E11C3","#7D15C0","#8D1ABE","#9C1EBB","#AB22B9","#BA26B6"],
+      ["#7B09E3","#8714DA","#931ED1","#9F29C8","#AB34C0","#B73FB7","#C349AE","#CF54A5"],
+      ["#BA26B6","#BF36B7","#C446B9","#C956BA","#CD67BB","#D277BC","#D787BE","#DC97BF"],
+      ["#CF54A5","#D4688D","#DA7C76","#DF905E","#E5A447","#EAB82F","#F0CC18","#F5E000"]
+   ]
+)
+
+
 
 minTemp = 273     # ~ 0 graden celcius
 maxTemp = 305     # ~ 32 graden celcius
@@ -431,25 +298,40 @@ def createColorBlocks():
    # init
    imgSwaps = Image.new(mode = "RGBA", size = (size, size), color = 'black')
    drawSwaps = ImageDraw.Draw(imgSwaps)
-   
-   colorCount = len(colors)
+
+   # get the number of rows
+   rows = len(colors)
+
+   # get the number of columns
+   cols = len(colors[0])
+
+   colorCount = rows * cols
    grid = math.ceil(math.sqrt(colorCount))
    width = size / grid
 
    # colors loopen en telkens tekenen
    i = 0
+
    for row in range(0, grid):
       for col in range(0, grid):
-         if i < len(colors):
-            color = getColor(i)
+         if i < colorCount:
+            mainColorIndex = math.floor(i / cols)
+            mainColor = colors[mainColorIndex]
+            subColorIndex = i % cols
+            print(i, mainColorIndex, mainColor, subColorIndex)
+            color = mainColor[subColorIndex]
+
             x = math.floor(col * width)
             y = math.floor(row * width)
             x2 = x + width
             y2 = y + width
-            drawSwaps.rectangle((x, y, x2, y2), fill=color, outline='black')          
-         i = i +1
-   
+            drawSwaps.rectangle((x, y, x2, y2), fill=color, outline='black')
+         i = i + 1
+
    imgSwaps.save(filename)
+
+   print(colorCount)
+   exit(0)
 
 
 def imgToBase64(filename):
@@ -484,7 +366,7 @@ def main():
       print("windSpeed  = ", round(windSpeed))
       print("temp       = ", round(temp - 273))
 
-      create_image_weather(clouds, temp, windSpeed)
+      #create_image_weather(clouds, temp, windSpeed)
       print("image created")
 #       encoded = imgToBase64(filename)
 #       uploadToGravatar(encoded)
@@ -493,13 +375,6 @@ def main():
       # tonen welke colors er gedefinieerd zijn in de color array, om gemakkelijker te zien welke uit de toon vallen
       createColorBlocks()
 
-
-#      tests = [
-#          0,1,2,3,4,6,8,10,12,15,20,30
-#      ]
-
-#      for x in tests:
-#         print(x, getOffsetFromWind(x))
 
 if __name__ == "__main__":
     main()
