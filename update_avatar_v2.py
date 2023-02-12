@@ -71,7 +71,7 @@ city_name = "Bruges"
 filename = "img01.png"
 dim_x = 2000 * 2      # * 2 om te kunnen resizen ifv anti-alias
 dim_y = 2000 * 2
-crop = 400
+crop = 300
 
 # colorpalettes created with
 # https://coolors.co/6ad2f5-118ab2-06d6a0-ffd166-f73562
