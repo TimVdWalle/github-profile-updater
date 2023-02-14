@@ -34,12 +34,11 @@
 import os
 from dotenv import load_dotenv
 import requests, json
-import hashlib
 
+from datetime import date, datetime
 #from libgravatar import Gravatar
 from libgravatar import GravatarXMLRPC
 
-import random
 import numpy as np
 import math
 
@@ -343,6 +342,10 @@ def imgToBase64(filename):
 #
 ################################################################
 def main():
+   # add datetime to output for easier logging
+   now = datetime.now()
+   print("now =", now)
+
    print ("create avatar image")
    res = fetch_weather()
 
