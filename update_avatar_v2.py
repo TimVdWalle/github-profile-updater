@@ -77,21 +77,20 @@ crop = 300
 # https://coolors.co/gradient-palette/f73562-ffd3d3?number=8
 
 colors = np.array(
-   [
-      ["#6AD2F5", "#5DC8EB", "#51BDE2", "#44B3D8", "#37A9CF", "#2A9FC5", "#1E94BC", "#118AB2"],
-      ["#118AB2", "#0F95AF", "#0EA0AD", "#0CABAA", "#0BB5A8", "#09C0A5", "#08CBA3", "#06D6A0"],
-      ["#06D6A0", "#2AD598", "#4DD58F", "#71D487", "#94D37F", "#B8D277", "#DBD26E", "#FFD166"],
-      ["#FFD166", "#FEBB65", "#FDA465", "#FC8E64", "#FA7864", "#F96263", "#F84B63", "#F73562"],
-      ["#F73562", "#F84C72", "#F96282", "#FA7992", "#FC8FA3", "#FDA6B3", "#FEBCC3", "#FFD3D3"]
-   ]
+    [
+        ["#6AD2F5", "#7BD7F6", "#8CDDF8", "#9DE2F9", "#ADE7FB", "#BEECFC", "#CFF2FE", "#E0F7FF"],
+        ["#118AB2", "#2B99BD", "#46A8C8", "#60B7D3", "#7AC5DE", "#94D4E9", "#AFE3F4", "#C9F2FF"],
+        ["#0F9DAE", "#27ABB9", "#3FB9C4", "#57C7CF", "#70D5DA", "#88E3E5", "#A0F1F0", "#B8FFFB"],
+        ["#06D6A0", "#21DCAB", "#3DE2B7", "#58E8C2", "#74EDCE", "#8FF3D9", "#ABF9E5", "#C6FFF0"],
+        ["#83D483", "#8DDA8D", "#96E096", "#A0E6A0", "#A9EDA9", "#B3F3B3", "#BCF9BC", "#C6FFC6"],
+        ["#FFD166", "#FFD675", "#FFDA84", "#FFDF93", "#FFE3A3", "#FFE8B2", "#FFECC1", "#FFF1D0"],
+        ["#FB8364", "#FC8F73", "#FC9B82", "#FDA791", "#FDB39F", "#FEBFAE", "#FECBBD", "#FFD7CC"],
+        ["#F73562", "#F84C72", "#F96282", "#FA7992", "#FC8FA3", "#FDA6B3", "#FEBCC3", "#FFD3D3"]
+    ]
 )
 
-
-
-
-minTemp = 273     # ~ 0 graden celcius
-maxTemp = 305     # ~ 32 graden celcius
-
+minTemp = 273  # ~ 0 graden celcius
+maxTemp = 305  # ~ 32 graden celcius
 
 ################################################################
 #
