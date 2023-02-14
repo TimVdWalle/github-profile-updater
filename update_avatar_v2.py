@@ -89,8 +89,8 @@ colors = np.array(
     ]
 )
 
-minTemp = 273  # ~ 0 graden celcius
-maxTemp = 305  # ~ 32 graden celcius
+minTemp = 273 - 1       # ~ -0 graden celcius
+maxTemp = 273 + 35      # ~ 30 graden celcius
 
 ################################################################
 #
@@ -363,7 +363,7 @@ def main():
         temp = weatherTuple[2]
 
         # test creation of image with hardcoded values
-        # temp = 273 + 11
+        # temp = 273 + 31
         # windSpeed = 7
         # clouds = 10
 
