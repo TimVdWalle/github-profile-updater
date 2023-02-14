@@ -61,13 +61,13 @@ OPEN_WEATHER_API_KEY = os.getenv('OPEN_WEATHER_API_KEY')
 
 EMAIL = os.getenv('EMAIL')
 PASSWORD = os.getenv('PASSWORD')
-MAILS_TO_ATTACH = os.environ.get('ATTACH_IMAGE_TO_MAILS').split(',')
+MAILS_TO_ATTACH = os.environ.get('ATTACH_IMAGE_TO_MAILS_SIMPLE').split(',')
 
 base_url = "http://api.openweathermap.org/data/2.5/weather?"
 city_name = "Bruges"
 
 # name of the file to save
-filename = "img01.png"
+filename = "img01_simple.png"
 dim_x = 2000 * 2  # * 2 om te kunnen resizen ifv anti-alias
 dim_y = 2000 * 2
 crop = 300
@@ -89,8 +89,10 @@ colors = np.array(
     ]
 )
 
-minTemp = 273 - 1       # ~ -0 graden celcius
-maxTemp = 273 + 35      # ~ 30 graden celcius
+minTemp = 273 - 1  # ~ -0 graden celcius
+maxTemp = 273 + 35  # ~ 30 graden celcius
+
+
 
 ################################################################
 #
@@ -111,71 +113,30 @@ dim_y4 = round(dim_y2 / 2)
 def create_image_weather(clouds, temp, windSpeed):
     # berekenen van waardes
     # clouds = 100 - clouds
-    clouds = clouds / 100
-    alpha = round(160 * clouds)
-    offset = getOffsetFromWind(windSpeed)
     colorIndex = mapTemp(temp)
     colors = getColors(colorIndex)
-    fgColor = colors[0]
 
     # achtergrond kleur op grijs zetten
-    imageBg = Image.new(mode="RGBA", size=(dim_x, dim_y), color='#32A6F7')
-
-    # voorgrond image aanmaken
-    imageFg = Image.new(mode="RGBA", size=(dim_x, dim_y), color='grey')
-    imageFg.putalpha(alpha)
-
-    # achtergrond samenvoegen met voorgrond
-    imageBg.paste(imageFg, (0, 0), imageFg)
-
-    # figuur erop zetten
-    draw = ImageDraw.Draw(imageBg)
-
-    # punten berekenen
-    origin = (dim_x2, dim_y2)
-
-    # print("offset     = ", offset)
-
-    pm = (dim_x2, dim_y2)
-
-    p1 = (dim_x4 - offset, dim_y2)
-    p3 = rotate(origin, p1, np.pi / 2)
-    p5 = rotate(origin, p1, np.pi)
-    p7 = rotate(origin, p3, np.pi)
-
-    p2 = (dim_x4 + offset, dim_y2)
-    p2 = rotate(origin, p2, np.pi / 4)
-    p4 = rotate(origin, p2, np.pi / 2)
-    p6 = rotate(origin, p2, np.pi)
-    p8 = rotate(origin, p4, np.pi)
-
-    draw.polygon((p1, p2, p3, p4, p5, p6, p7, p8), fill=fgColor, outline=None)
-
-    # now draw the triangles (hardcoded, because the points are also hardcoded from p1 to p8)
-    draw.polygon((p7, p8, pm), fill=colors[1], outline='black')
-    draw.polygon((p8, p1, pm), fill=colors[3], outline='black')
-    draw.polygon((p6, p5, pm), fill=colors[2], outline='black')
-    draw.polygon((p1, p2, pm), fill=colors[4], outline='black')
-    draw.polygon((p5, p4, pm), fill=colors[5], outline='black')
-    draw.polygon((p2, p3, pm), fill=colors[6], outline='black')
-    draw.polygon((p4, p3, pm), fill=colors[7], outline='black')
+    imageBg = generate_gradient(colors[7], colors[0], dim_x, dim_y)
 
     # resizen om anti-alias mogelijk te maken, en saven; LANCZOS ~ anti-alias
     imageBg = imageBg.resize((dim_x2, dim_y2), resample=Image.LANCZOS)
 
-    # dimensions to crop
-    factor = 1 - ((windSpeed + 1) / 20)
-    cropFactor = abs(math.ceil(crop * factor))
-
-    # print(cropFactor)
-
-    dim1 = math.ceil(cropFactor)
-    dim2 = math.ceil(dim_y / 2 - cropFactor)
-    box = (dim1, dim1, dim2, dim2)
-    imageBg = imageBg.crop(box)
-
     imageBg.save(filename)
 
+
+def generate_gradient(
+        colour1: str, colour2: str, width: int, height: int) -> Image:
+    """Generate a vertical gradient."""
+    base = Image.new('RGB', (width, height), colour1)
+    top = Image.new('RGB', (width, height), colour2)
+    mask = Image.new('L', (width, height))
+    mask_data = []
+    for y in range(height):
+        mask_data.extend([int(255 * (y / height))] * width)
+    mask.putdata(mask_data)
+    base.paste(top, (0, 0), mask)
+    return base
 
 def mapWeather(w):
     clouds = 0
@@ -200,37 +161,6 @@ def mapWeather(w):
     return (clouds, windSpeed, temp)
 
 
-def mapWind(wind):
-    magicFactor = 25
-    return np.tanh((wind - 4) / magicFactor)
-
-
-def getOffsetFromWind(windSpeed):
-    # some parameters for the custom mapping algo
-    windCorrectionTerm = 2
-    correctionTerm = -300
-    correctionFactor = 2500
-
-    splitCutoff = 350
-    splitFactor = 4
-
-    maxWindSpeed = 30
-
-    # the algo
-    mapped = (windSpeed + windCorrectionTerm) / maxWindSpeed * correctionFactor + correctionTerm
-
-    # apply corrections because values above 350 climb too fast
-    if (mapped > splitCutoff):
-        factor = mapped / splitCutoff
-        factor = factor - 1
-        factor = factor / splitFactor
-        factor = factor + 1
-        factor = 1 / factor
-        mapped = mapped * factor
-
-    return mapped
-
-
 def mapTemp(temp):
     if temp <= minTemp:
         return 0
@@ -249,27 +179,6 @@ def getColors(colorIndex):
 
 def getColor(index):
     return colors[index]
-
-
-def getPairedColor(index):
-    if index >= len(colors) - 1:
-        return (0, 0, 0)
-
-    return colors[index + 1]
-
-
-def rotate(origin, point, angle):
-    """
-    Rotate a point counterclockwise by a given angle around a given origin.
-    The angle should be given in radians.
-    """
-    ox, oy = origin
-    px, py = point
-
-    qx = ox + math.cos(angle) * (px - ox) - math.sin(angle) * (py - oy)
-    qy = oy + math.sin(angle) * (px - ox) + math.cos(angle) * (py - oy)
-    return round(qx), round(qy)
-
 
 def uploadToGravatar(imageBase64):
     g = GravatarXMLRPC(email=EMAIL, password=PASSWORD)
@@ -360,7 +269,7 @@ def main():
         weatherTuple = mapWeather(res)
         clouds = weatherTuple[0]
         windSpeed = weatherTuple[1]
-        temp = weatherTuple[2]
+        temp = weatherTuple[1]
 
         # test creation of image with hardcoded values
         # temp = 273 + 31
