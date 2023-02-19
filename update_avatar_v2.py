@@ -152,13 +152,15 @@ def create_image_weather(clouds, temp, windSpeed):
     draw.polygon((p1, p2, p3, p4, p5, p6, p7, p8), fill=fgColor, outline=None)
 
     # now draw the triangles (hardcoded, because the points are also hardcoded from p1 to p8)
+    draw.polygon((p6, p7, pm), fill=colors[0], outline='black')
     draw.polygon((p7, p8, pm), fill=colors[1], outline='black')
     draw.polygon((p8, p1, pm), fill=colors[3], outline='black')
-    draw.polygon((p6, p5, pm), fill=colors[2], outline='black')
-    draw.polygon((p1, p2, pm), fill=colors[4], outline='black')
-    draw.polygon((p5, p4, pm), fill=colors[5], outline='black')
-    draw.polygon((p2, p3, pm), fill=colors[6], outline='black')
-    draw.polygon((p4, p3, pm), fill=colors[7], outline='black')
+    draw.polygon((p1, p2, pm), fill=colors[5], outline='black')
+
+    draw.polygon((p2, p3, pm), fill=colors[7], outline='black')
+    draw.polygon((p3, p4, pm), fill=colors[6], outline='black')
+    draw.polygon((p4, p5, pm), fill=colors[4], outline='black')
+    draw.polygon((p5, p6, pm), fill=colors[2], outline='black')
 
     # resizen om anti-alias mogelijk te maken, en saven; LANCZOS ~ anti-alias
     imageBg = imageBg.resize((dim_x2, dim_y2), resample=Image.LANCZOS)
@@ -363,7 +365,7 @@ def main():
         temp = weatherTuple[2]
 
         # test creation of image with hardcoded values
-        # temp = 273 + 31
+        temp = 273 + 31
         # windSpeed = 7
         # clouds = 10
 
