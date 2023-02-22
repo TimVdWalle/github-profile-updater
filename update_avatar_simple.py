@@ -269,7 +269,7 @@ def main():
         weatherTuple = mapWeather(res)
         clouds = weatherTuple[0]
         windSpeed = weatherTuple[1]
-        temp = weatherTuple[1]
+        temp = weatherTuple[2]
 
         # test creation of image with hardcoded values
         # temp = 273 + 31
